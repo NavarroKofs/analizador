@@ -6,10 +6,17 @@ function search() {
         alert("Introduce una palabra en el buscador")
         return;
     }
-    let palabraDecodificada = removeAccents(palabraBuscar.replace(/ /g,"_"));
-    let urlBusqueda = 'buscador.php?consulta=' + palabraDecodificada;
+    //let palabraDecodificada = removeAccents(palabraBuscar.replace(/ /g,"_"));
+    let urlBusqueda = 'buscador.php?consulta=' + palabraBuscar;
     get(urlBusqueda).then(function(response) {
-        alert(response);
+        let tabla = initializeTable(response);
+        let foo = document.getElementById("resultados");
+        if (foo.hasChildNodes()) { 
+            while ( foo.childNodes.length >= 1 ){
+                foo.removeChild( foo.firstChild );
+            }
+        }
+        foo.appendChild(tabla);
     }, function(error) {
         alert("Se ha producido un error, intente más tarde.")
     })
@@ -32,6 +39,38 @@ function get(url) {
         };
         req.send();
     });
+}
+
+function initializeTable(data) {
+
+    data = JSON.parse(data);
+
+    var table = document.createElement("table");
+    var thead = table.createTHead();
+    var tbody = table.createTBody();
+    var col = [];
+
+    for (var i = 0; i < data.length; i++) {
+        for (var key in data[i]) {
+            if (col.indexOf(key) === -1) {
+                col.push(key);
+            }
+        }
+    }
+    var cabecera = thead.insertRow(-1);
+    for (var i = 0; i < col.length; i++) {
+        var th = document.createElement("th");
+        th.innerHTML = col[i];
+        cabecera.appendChild(th);
+    }
+    for (var i = 0; i < data.length; i++) {
+        tr = tbody.insertRow(-1);
+        for (var j = 0; j < col.length; j++) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = data[i][col[j]];
+        }
+    }
+    return table;
 }
 
 const removeAccents = (str) => {

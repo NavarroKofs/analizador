@@ -8,8 +8,8 @@
 
 /* Add your CSS code below */
 body {
-    background-color: var(--white);
-    background: url(https://upload.wikimedia.org/wikipedia/commons/e/e3/Wikipedia_logo_letters_banner.svg);
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,83,1) 35%, rgba(17,111,191,1) 100%);
     font-family: var(--font-primary);
     display: flex;
     flex-direction: column;
@@ -28,6 +28,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 h1 {
+    color: var(--white);
     font-size: 80px;
 }
 
@@ -82,13 +83,14 @@ main {
 
 table {
     background-color: rgba(27, 27, 27, 0.116);
+    color: var(--white);
     width: 80%;
-    margin: 20px auto;
+    margin: 40px auto;
     border-collapse: collapse;
 }
 
-tbody {
-    border-bottom: black 2px solid;
+thead {
+    border-bottom: var(--gray) 2px solid;
 }
 
 tbody > tr > th {
